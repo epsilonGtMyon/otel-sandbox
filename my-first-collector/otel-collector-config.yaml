@@ -1,0 +1,41 @@
+# レシーバー
+receivers:
+  otlp:
+    protocols:
+      # endpoint (default = localhost:4317 for grpc protocol, localhost:4318 http protocol): 
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+# プロセッサー
+processors:
+  batch:
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 80
+    spike_limit_percentage: 15
+
+# エクスポーター
+exporters:
+  # データソース: メトリクス
+  prometheusremotewrite:
+    # endpoint: http://prometheus.example.com:9411/api/prom/push
+    # 公式の Prometheus (Docker経由で動作) の
+    # エンドポイントを使う場合は: 'http://prometheus:9090/api/v1/write' 次を追加
+    # tls:
+    #   insecure: true
+    endpoint: http://prometheus:9090/api/v1/write
+    tls:
+      insecure: true
+      
+service:
+  pipelines:
+    # traces:
+    #   receivers: [foo]
+    #   exporters: [count]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [prometheusremotewrite]
+
