@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.metrics.DoubleGauge;
 import io.opentelemetry.api.metrics.Meter;
-import io.opentelemetry.sdk.OpenTelemetrySdk;
-import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk;
 
 /*
  * メトリクスの設定
@@ -20,7 +20,8 @@ public class Sandbox01Main {
 		var main = new Sandbox01Main();
 		main.setup();
 
-		OpenTelemetrySdk openTelemetrySdk = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
+		// 内部ではAutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();が呼ばれている。
+		OpenTelemetry openTelemetrySdk = GlobalOpenTelemetry.get();
 		main.start1(openTelemetrySdk);
 
 		//-----------------------------
@@ -35,6 +36,11 @@ public class Sandbox01Main {
 	private void setup() {
 
 		Map<String, String> props = new HashMap<>();
+		
+		// これがセットされていると
+		// GlobalOpenTelemetry.get()を実行したときに
+		// AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk()が実行される。
+		props.put("otel.java.global-autoconfigure.enabled", "true");
 
 		props.put("otel.service.name", "my-service");
 		props.put("otel.resource.attributes", "myKey=001");
@@ -46,7 +52,7 @@ public class Sandbox01Main {
 		props.entrySet().forEach(en -> System.setProperty(en.getKey(), en.getValue()));
 	}
 
-	private void start1(OpenTelemetrySdk openTelemetry) throws IOException, InterruptedException {
+	private void start1(OpenTelemetry openTelemetry) throws IOException, InterruptedException {
 		Meter meter1 = openTelemetry.getMeter("my-meter1");
 
 		DoubleGauge m1g1 = meter1.gaugeBuilder("my-meter1-g1").build();
