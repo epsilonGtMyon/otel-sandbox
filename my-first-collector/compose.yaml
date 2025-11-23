@@ -18,7 +18,7 @@ services:
       - "55679:55679" # zpages extension
     depends_on:
       - prometheus
-  
+      - zipkin
   # Prometheus
   prometheus:
     image: prom/prometheus:v3.7.3
@@ -30,4 +30,14 @@ services:
       - "--storage.tsdb.path=/prometheus"
       # 追加分
       - "--web.enable-remote-write-receiver"
+  # Zipkin
+  # https://github.com/openzipkin/zipkin/blob/master/docker/examples/docker-compose.yml
+  zipkin:
+    # image: openzipkin/zipkin:3.5
+    image: openzipkin/zipkin-slim:3.5
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      # Port used for the Zipkin UI and HTTP Api
+      - "9411:9411"
 

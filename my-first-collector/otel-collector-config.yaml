@@ -2,7 +2,7 @@
 receivers:
   otlp:
     protocols:
-      # endpoint (default = localhost:4317 for grpc protocol, localhost:4318 http protocol): 
+      # endpoint (default = localhost:4317 for grpc protocol, localhost:4318 http protocol):
       grpc:
         endpoint: 0.0.0.0:4317
       http:
@@ -27,15 +27,18 @@ exporters:
     #   insecure: true
     endpoint: http://prometheus:9090/api/v1/write
     tls:
-      insecure: true
-      
+      insecure:
+  # トレーサー
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+
 service:
   pipelines:
-    # traces:
-    #   receivers: [foo]
-    #   exporters: [count]
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [zipkin]
     metrics:
       receivers: [otlp]
       processors: [memory_limiter, batch]
       exporters: [prometheusremotewrite]
-
