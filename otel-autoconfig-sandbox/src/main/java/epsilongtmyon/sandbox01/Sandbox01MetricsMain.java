@@ -13,11 +13,11 @@ import io.opentelemetry.api.metrics.Meter;
 /*
  * メトリクスの設定
  */
-public class Sandbox01Main {
+public class Sandbox01MetricsMain {
 
 	public static void main(String[] args) throws Exception {
 
-		var main = new Sandbox01Main();
+		var main = new Sandbox01MetricsMain();
 		main.setup();
 
 		// 内部ではAutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();が呼ばれている。
@@ -46,7 +46,6 @@ public class Sandbox01Main {
 		props.put("otel.resource.attributes", "myKey=001");
 
 		props.put("otel.metric.export.interval", "10000");// default:1min
-
 		props.put("otel.metrics.exporter", "otlp"); //default:otlp
 
 		props.entrySet().forEach(en -> System.setProperty(en.getKey(), en.getValue()));

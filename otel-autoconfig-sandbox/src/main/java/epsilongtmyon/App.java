@@ -3,12 +3,41 @@
  */
 package epsilongtmyon;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import epsilongtmyon.sandbox01.Sandbox01MetricsMain;
+import epsilongtmyon.sandbox01.Sandbox01TraceMain;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
+public class App {
+	public String getGreeting() {
+		return "Hello World!";
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		String app = getApp();
+
+		switch (app) {
+		case "sandbox01-metrics":
+			Sandbox01MetricsMain.main(args);
+			break;
+		case "sandbox01-trace":
+			Sandbox01TraceMain.main(args);
+			break;
+		}
+
+	}
+
+	private static String getApp() {
+
+		String property = System.getProperty("APP");
+		if (property != null) {
+			return property;
+		}
+
+		property = System.getenv("APP");
+		if (property != null) {
+			return property;
+		}
+
+		return "sandbox01-trace";
+	}
 }
