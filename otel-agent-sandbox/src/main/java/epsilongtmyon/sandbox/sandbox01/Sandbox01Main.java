@@ -1,4 +1,4 @@
-package epsilongtmyon.sandbox01;
+package epsilongtmyon.sandbox.sandbox01;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

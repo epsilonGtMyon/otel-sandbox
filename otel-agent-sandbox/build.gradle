@@ -26,6 +26,12 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/io.opentelemetry.instrumentation/opentelemetry-instrumentation-annotations
 	implementation 'io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:2.22.0'
+	
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	implementation 'com.h2database:h2:2.4.240'
+	// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+	implementation 'com.zaxxer:HikariCP:7.0.2'
+	
 
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
