@@ -1,4 +1,5 @@
 drop table if exists MY_TABLE;
+drop table if exists MY_LOG;
 
 create table MY_TABLE (
    ID             bigint auto_increment not null
@@ -12,6 +13,16 @@ create table MY_TABLE (
   ,UPDATED_AT     timestamp
   ,constraint PK_MY_TABLE primary key (
 	ID
+  )
+);
+
+create table MY_LOG (
+   SEQ            bigint auto_increment not null
+  ,LOG_MESSAGE    varchar(2000)
+  ,CREATED_AT     timestamp
+  ,UPDATED_AT     timestamp
+  ,constraint PK_MY_LOG primary key(
+	SEQ
   )
 );
 

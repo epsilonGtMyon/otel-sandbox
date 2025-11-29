@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import epsilongtmyon.common.db.DbInitializer;
@@ -25,7 +24,7 @@ public class HikariCpSandbox01Main {
 	@WithSpan
 	private void start1() throws SQLException {
 
-		try (HikariDataSource ds = getDataSource()) {
+		try (HikariDataSource ds = Sandbox02Util.createHikariDataSource()) {
 
 			try (Connection con = ds.getConnection()) {
 				con.setAutoCommit(false);
@@ -53,17 +52,6 @@ public class HikariCpSandbox01Main {
 
 			}
 		}
-
-	}
-
-	private static HikariDataSource getDataSource() {
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
-		config.setUsername("sa");
-		config.setPassword("");
-
-		HikariDataSource ds = new HikariDataSource(config);
-		return ds;
 
 	}
 }

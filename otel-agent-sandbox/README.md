@@ -24,14 +24,18 @@ Invoke-WebRequest -Uri "https://github.com/open-telemetry/opentelemetry-java-ins
 
 ```
 -Dotel.service.name=my-service
+-Dotel.instrumentation.mybatis.enabled=true
 -javaagent:.agent/opentelemetry-javaagent.jar
 ```
+
+MyBatisはデフォルトで無効のようなので明示的に有効化
 
 
 いろいろ渡すことができる。
 
 ```
 -Dotel.service.name=my-service
+-Dotel.instrumentation.mybatis.enabled=true
 -Dotel.resource.attributes=myKey=001,myKey=002
 -Dotel.metric.export.interval=10000
 -javaagent:.agent/opentelemetry-javaagent.jar

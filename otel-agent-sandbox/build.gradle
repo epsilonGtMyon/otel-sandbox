@@ -31,6 +31,8 @@ dependencies {
 	implementation 'com.h2database:h2:2.4.240'
 	// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
 	implementation 'com.zaxxer:HikariCP:7.0.2'
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis
+    implementation 'org.mybatis:mybatis:3.5.19'
 	
 
     // Use JUnit Jupiter for testing.
